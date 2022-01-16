@@ -56,7 +56,7 @@ class Board {
         this.snake.push(position)
 
         let head = this.tiles_on_board[position]
-        head.style.backgroundColor = 'violet'
+        head.style.backgroundColor = 'DarkOrange'
 
     }
     
@@ -85,7 +85,8 @@ class Board {
 
         //moves snake head to a newer position
         this.snake.unshift(head_pos)
-        this.tiles_on_board[this.snake[0]].style.backgroundColor = 'violet'
+        this.tiles_on_board[this.snake[0]].style.backgroundImage = ''
+        this.tiles_on_board[this.snake[0]].style.backgroundColor = 'DarkOrange'
     }
     
     handle_keypress(board){
@@ -247,7 +248,7 @@ class Board {
             //console.log('apple spawned!')
             let last_tile = _this.not_spawned_apples[_this.not_spawned_apples.length - 1]
             
-            _this.tiles_on_board[last_tile].style.backgroundColor = 'crimson'
+            _this.tiles_on_board[last_tile].style.backgroundImage = "url('imgs/apple.png')"
             _this.not_spawned_apples.pop()
             
         }
@@ -287,7 +288,7 @@ class Board {
             return false
         }
 
-        if(((future_head_pos%10 == this.snake_head%10 + this.width - 1) || (future_head_pos%10 == this.snake_head%10 - this.width + 1)) && (future_head_pos == this.snake_head+1 || future_head_pos == this.snake_head-1)){
+        if(((future_head_pos%this.width == this.snake_head%this.width + this.width - 1) || (future_head_pos%this.width == this.snake_head%this.width - this.width + 1)) && (future_head_pos == this.snake_head+1 || future_head_pos == this.snake_head-1)){
             console.log(future_head_pos, this.snake_head)
             return false
         }
@@ -305,7 +306,7 @@ class Board {
 let game_div = document.getElementById('game_div')
 
 //create instance of a game
-let board = new Board(10, 10)
+let board = new Board(25, 20)
 console.log(board)
 
 //make array of zeroes and render it to screen
@@ -323,4 +324,4 @@ board.create_snake_head()
 board.handle_keypress(board)
 
 //spawns and renders apple once every x time
-let spawner = setInterval(board.render_apple, 1000, board)
+let spawner = setInterval(board.render_apple, 3000, board)
